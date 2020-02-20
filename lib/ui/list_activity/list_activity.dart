@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:serviceapp/repository/Injector.dart';
 import 'package:serviceapp/repository/model/work.dart';
+import 'package:serviceapp/ui/detailScreen.dart';
 import 'package:serviceapp/ui/list_activity/presenter_list_activity.dart';
 
 class ListScreen extends StatefulWidget {
@@ -99,65 +100,70 @@ class _ListScreen extends State<ListScreen> implements ListExtension {
 
   Widget workList(List<Work> list) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 17, vertical: 24.0),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 24.0),
       height: 150,
       color: Color.fromRGBO(35, 35, 35, 1),
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: list.length,
           itemBuilder: (context, index) {
-            return Container(
-              width: 150,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 18, 0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 3.0),
-                    borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                    color: Colors.white,
-                  ),
-
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(7, 10, 0, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              list[index].type,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: 18.0),
-                            ),
-                            Text(
-                              list[index].name,
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 15.0),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.calendar_today,
-                                  size: 12,
-                                  color: Colors.black,
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    list[index].date.substring(0, 10),
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 12.0),
+            return GestureDetector(
+              onTap: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DetailScreen()))
+              },
+              child: Container(
+                width: 120,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 18, 0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 3.0),
+                      borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(7, 10, 0, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                list[index].type,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 14.0),
+                              ),
+                              Text(
+                                list[index].name,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 10.0),
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.calendar_today,
+                                    size: 12,
+                                    color: Colors.black,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 6),
+                                    child: Text(
+                                      list[index].date.substring(0, 10),
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 12.0),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
