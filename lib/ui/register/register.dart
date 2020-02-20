@@ -50,30 +50,37 @@ class _RegisterScreen extends State<RegisterScreen> implements RegisterView {
                     textFieldForm('Apellido', Icon(Icons.perm_identity),
                         controllerUsername),
                     textFieldForm('Correo', Icon(Icons.email), controllerEmail),
-                    textFieldForm('Fecha Nacimiento (yy-mm-dd)', Icon(Icons.calendar_today),
-                        controllerBirthDate),
+                    textFieldForm('Fecha Nacimiento (yy-mm-dd)',
+                        Icon(Icons.calendar_today), controllerBirthDate),
                     textFieldForm('Movil', Icon(Icons.call), controllerMobile),
                     textFieldForm(
                         'Password', Icon(Icons.lock), controllerPassword),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: RaisedButton(
-                        onPressed: () {
-
-                          NewUser user = NewUser(
-                              controllerName.text,
-                              controllerUsername.text,
-                              controllerEmail.text,
-                              controllerBirthDate.text,
-                              controllerMobile.text,
-                              controllerPassword.text);
-                          print('Me han pinchado ' + user.name);
-                          _presenter.onRegisterClicked(user);
-                        },
-                        child:
-                            Text('Registrarme', style: TextStyle(fontSize: 20)),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
+                      child: ButtonTheme(
+                        minWidth: 2,
+                        height: 40,
+                        child: RaisedButton(
+                          onPressed: () {
+                            NewUser user = NewUser(
+                                controllerName.text,
+                                controllerUsername.text,
+                                controllerEmail.text,
+                                controllerBirthDate.text,
+                                controllerMobile.text,
+                                controllerPassword.text);
+                            _presenter.onRegisterClicked(user);
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(25.0)),
+                          child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: Color.fromRGBO(9, 174, 224, 1),
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

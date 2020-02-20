@@ -6,7 +6,7 @@ class PreferencesLocalRepository implements LocalRepositoryInterface {
   @override
   Future<String> getToken() async {
     SharedPreferences _sharedPrefs = await SharedPreferences.getInstance();
-    print('Hola sharedPrefs ' + _sharedPrefs.getString('tokenRegistered'));
+
     print("entro");
     if (_sharedPrefs.containsKey('tokenRegistered')) {
       print("entro");

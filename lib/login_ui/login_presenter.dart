@@ -5,7 +5,8 @@ import 'package:serviceapp/model/jsonPostLogin.dart';
 class LoginPresenter {
   LoginView _view;
   RemoteRepository remoteRepository;
-  final PreferencesLocalRepository _localRepository  = new PreferencesLocalRepository();
+  final PreferencesLocalRepository _localRepository =
+      new PreferencesLocalRepository();
 
   LoginPresenter(this._view, this.remoteRepository);
 
@@ -23,11 +24,16 @@ class LoginPresenter {
 
   checkLocal() async {
     String token = await _localRepository.getToken();
-    return token;
+    if (token != null) {
+      _view.loginCorrect(true);
+    } else {
+      return;
+    }
   }
 }
 
 abstract class LoginView {
   loginCorrect(bool response) {}
+
   loginError() {}
 }
