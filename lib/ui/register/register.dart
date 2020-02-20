@@ -95,35 +95,44 @@ class _RegisterScreen extends State<RegisterScreen> implements RegisterView {
       String fieldName, Icon icon, TextEditingController controllerName) {
     var regFields;
     regFields = Container(
-      margin: const EdgeInsets.only(top: 30),
-      height: 55,
+      margin: const EdgeInsets.symmetric(vertical: 20),
+      height: 45,
       width: 250,
+      decoration: new BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(25.0)),
       child: TextFormField(
+        keyboardType: TextInputType.visiblePassword,
         controller: controllerName,
         decoration: new InputDecoration(
+          contentPadding: const EdgeInsets.all(2),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(
                 color: Color.fromRGBO(9, 174, 224, 1),
-                width: 2.0,
+                width: 1.0,
               )),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.0),
             borderSide: BorderSide(
+              width: 2,
               color: Color.fromRGBO(9, 174, 224, 1),
-              width: 3.0,
             ),
           ),
+          alignLabelWithHint: true,
           prefixIcon: icon,
           labelText: fieldName,
-          fillColor: Colors.white,
+          labelStyle: TextStyle(
+            color: Colors.black,
+            decoration: TextDecoration.none,
+          ),
           border: new OutlineInputBorder(
             borderRadius: new BorderRadius.circular(25.0),
             borderSide: new BorderSide(),
           ),
         ),
-        keyboardType: TextInputType.emailAddress,
         style: new TextStyle(
+          decoration: TextDecoration.none,
+          color: Colors.black,
           fontFamily: "Poppins",
         ),
       ),

@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:serviceapp/data/repository/local_repository/local_repository.dart';
 import 'package:serviceapp/login_ui/login_presenter.dart';
-import 'package:serviceapp/ui/list_activity/list_activity.dart';
+
 import '../Injector.dart';
 
-class LoginScreen extends StatefulWidget {
+class loginScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _loginScreenState createState() => _loginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> implements LoginView {
+class _loginScreenState extends State<loginScreen> implements LoginView {
   @override
   final loginController = TextEditingController();
+
   final passwordController = TextEditingController();
 
-  LoginPresenter _presenter;
-  PreferencesLocalRepository _localRepository =
-      new PreferencesLocalRepository();
+  LoginPresenter presenter;
 
   @override
   void initState() {
     super.initState();
-    _presenter = LoginPresenter(this, Injector.instance.remoteRepository);
-    Future<dynamic> token = _presenter.checkLocal();
-    if (token != null) {
-      print('No soy null, mi token es ' + token.toString());
-    }
+    presenter = LoginPresenter(this, Injector.instance.remoteRepository);
   }
 
   Widget build(BuildContext context) {
@@ -77,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> implements LoginView {
                 height: 40,
                 child: RaisedButton(
                   onPressed: () => {
-                    _presenter.onLoginClicked(
+                    presenter.onLoginClicked(
                         loginController.text, passwordController.text)
                   },
                   shape: RoundedRectangleBorder(
@@ -97,11 +91,7 @@ class _LoginScreenState extends State<LoginScreen> implements LoginView {
   }
 
   @override
-  loginCorrect(bool response) {
-    if(response){
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ListScreen()));
-    }
+  loginCorrect(bool repuesta) {
     return null;
   }
 
