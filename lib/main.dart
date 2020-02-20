@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serviceapp/ui/list_activity/list_activity.dart';
-//import 'package:serviceapp/login_ui/login_screen.dart';
-import 'package:serviceapp/ui/register/register.dart';
+import 'package:serviceapp/login_ui/login_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ListScreen(),
+      home: loginScreen(),
     );
   }
 }
