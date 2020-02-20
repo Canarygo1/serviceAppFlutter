@@ -15,7 +15,7 @@ import 'package:serviceapp/repository/remote%20repository/http_remote_repository
 
       bool isCreated = await _remoteRepository.registerUser(newUser);
       print(isCreated);
-      if (isCreated != true) {
+      if (isCreated == true) {
         _view.openMainScreen();
       }else{
         _view.showLoginError();
