@@ -1,15 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:serviceapp/repository/Injector.dart';
+import 'package:serviceapp/repository/model/user.dart';
+import 'package:serviceapp/ui/list_activity/list_activity.dart';
+import 'package:serviceapp/ui/register/presenter_register.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
   _RegisterScreen createState() => _RegisterScreen();
 }
 
-class _RegisterScreen extends State<RegisterScreen> {
+class _RegisterScreen extends State<RegisterScreen> implements RegisterView {
+  RegisterPresenter _presenter;
+  final controllerName = TextEditingController();
+  final controllerUsername = TextEditingController();
+  final controllerEmail = TextEditingController();
+  final controllerBirthDate = TextEditingController();
+  final controllerMobile = TextEditingController();
+  final controllerPassword = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+    _presenter = RegisterPresenter(this, Injector.instance.remoteRepository);
   }
 
   @override
@@ -19,77 +32,108 @@ class _RegisterScreen extends State<RegisterScreen> {
       body: register(),
     );
   }
-}
 
-Widget register() {
-  return Scaffold(
-    body: Center(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(top: 50),
-              child: Column(
-                children: <Widget>[
-                  textFieldForm('Nombre', Icon(Icons.account_circle)),
-                  textFieldForm('Apellido', Icon(Icons.perm_identity)),
-                  textFieldForm('Correo', Icon(Icons.email)),
-                  textFieldForm('Direccion', Icon(Icons.person_pin_circle)),
-                  textFieldForm('Movil', Icon(Icons.call)),
-                  textFieldForm('Password', Icon(Icons.lock)),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: RaisedButton(
-                      onPressed: () {},
-                      child: Text('Registrarme', style: TextStyle(fontSize: 20)),
+  Widget register() {
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(top: 50),
+                child: Column(
+                  children: <Widget>[
+                    textFieldForm(
+                        'Nombre', Icon(Icons.account_circle), controllerName),
+                    textFieldForm('Apellido', Icon(Icons.perm_identity),
+                        controllerUsername),
+                    textFieldForm('Correo', Icon(Icons.email), controllerEmail),
+                    textFieldForm('Direccion', Icon(Icons.person_pin_circle),
+                        controllerBirthDate),
+                    textFieldForm('Movil', Icon(Icons.call), controllerMobile),
+                    textFieldForm(
+                        'Password', Icon(Icons.lock), controllerPassword),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: RaisedButton(
+                        onPressed: () {
+
+                          NewUser user = NewUser(
+                              controllerName.text,
+                              controllerUsername.text,
+                              controllerEmail.text,
+                              controllerBirthDate.text,
+                              controllerMobile.text,
+                              controllerPassword.text);
+                          print('Me han pinchado ' + user.name);
+                          _presenter.onRegisterClicked(user);
+                        },
+                        child:
+                            Text('Registrarme', style: TextStyle(fontSize: 20)),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget textFieldForm(String fieldName, Icon icon) {
-  var regFields;
-  regFields = Container(
-    margin: const EdgeInsets.only(top: 30),
-    height: 55,
-    width: 250,
-    child: TextFormField(
-      decoration: new InputDecoration(
-        enabledBorder: OutlineInputBorder(
+  Widget textFieldForm(
+      String fieldName, Icon icon, TextEditingController controllerName) {
+    var regFields;
+    regFields = Container(
+      margin: const EdgeInsets.only(top: 30),
+      height: 55,
+      width: 250,
+      child: TextFormField(
+        controller: controllerName,
+        decoration: new InputDecoration(
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25.0),
+              borderSide: BorderSide(
+                color: Color.fromRGBO(9, 174, 224, 1),
+                width: 2.0,
+              )),
+          focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.0),
             borderSide: BorderSide(
               color: Color.fromRGBO(9, 174, 224, 1),
-              width: 2.0,
-            )),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide: BorderSide(
-            color: Color.fromRGBO(9, 174, 224, 1),
-            width: 3.0,
+              width: 3.0,
+            ),
+          ),
+          prefixIcon: icon,
+          labelText: fieldName,
+          fillColor: Colors.white,
+          border: new OutlineInputBorder(
+            borderRadius: new BorderRadius.circular(25.0),
+            borderSide: new BorderSide(),
           ),
         ),
-        prefixIcon: icon,
-        labelText: fieldName,
-        fillColor: Colors.white,
-        border: new OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(25.0),
-          borderSide: new BorderSide(),
+        keyboardType: TextInputType.emailAddress,
+        style: new TextStyle(
+          fontFamily: "Poppins",
         ),
       ),
-      keyboardType: TextInputType.emailAddress,
-      style: new TextStyle(
-        fontFamily: "Poppins",
-      ),
-    ),
-  );
+    );
 
-  return regFields;
+    return regFields;
+  }
+
+  @override
+  openMainScreen() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ListScreen()));
+    return null;
+  }
+
+  @override
+  showLoginError() {
+    // TODO: implement showLoginError
+    return null;
+  }
 }

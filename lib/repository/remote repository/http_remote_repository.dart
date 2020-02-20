@@ -1,4 +1,4 @@
-
+import 'package:http/http.dart';
 import 'package:serviceapp/repository/model/user.dart';
 import 'package:serviceapp/repository/remote%20repository/remote_repository.dart';
 
@@ -19,7 +19,14 @@ class HttpRemoteRepository implements RemoteRepositoryInterface {
 
   @override
   Future<bool> registerUser(NewUser newUser) async {
-  var request = await _clien
+    print("entro en funcion");
+    var json = newUser.toMap();
+    var request = await _client.post('http://10.0.2.2:3000/register', body: json);
+    print('enviao');
+    int statusCode = request.statusCode;
+    print(statusCode);
     return true;
   }
+
+  
 }

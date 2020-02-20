@@ -1,27 +1,32 @@
+import 'dart:convert';
+
 import 'package:serviceapp/repository/model/user.dart';
-import 'package:serviceapp/repository/remote%20repository/remote_repository.dart';
+import 'package:serviceapp/repository/remote%20repository/http_remote_repository.dart';
 
-/* class LoginPresenter {
-  final LocalRepository _localRepository;
-  final RemoteRepository _remoteRepository;
-  final LoginView _view;
+ class RegisterPresenter {
+  final HttpRemoteRepository _remoteRepository;
+  final RegisterView _view;
 
-  LoginPresenter(this._view, this._remoteRepository, this._localRepository);
+  RegisterPresenter(this._view, this._remoteRepository);
 
-  onLoginClicked(String name, String pwd) async {
+  onRegisterClicked(NewUser newUser) async {
     try {
-     /*loggingUser isLogged = await _remoteRepository.logInUser(name, pwd);
-      if (isLogged!=null) {
-        _localRepository.saveUser(isLogged);
+
+
+      bool isCreated = await _remoteRepository.registerUser(newUser);
+      print(isCreated);
+      if (isCreated != true) {
         _view.openMainScreen();
-      }*/
+      }else{
+        _view.showLoginError();
+      }
     } catch (e) {
-      _view.showLoginError();
+      print(e);
     }
   }
 }
 
-abstract class LoginView {
+abstract class RegisterView {
   openMainScreen();
   showLoginError();
-} */
+}
