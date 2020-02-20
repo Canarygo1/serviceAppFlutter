@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serviceapp/login_ui/login_presenter.dart';
+import 'package:serviceapp/ui/register/register.dart';
 
 import '../Injector.dart';
 
@@ -48,11 +49,22 @@ class _loginScreenState extends State<loginScreen> implements LoginView {
                   passwordController),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 20, 0, 0),
-              child: Center(
-                child: Text(
-                  "Registrate",
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+              padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
+              child: ButtonTheme(
+                minWidth: 2,
+                height: 40,
+                child: RaisedButton(
+                  onPressed: () => {
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => RegisterScreen())),
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(25.0)),
+                  child: Text(
+                    "Registrate",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: Color.fromRGBO(30, 30, 30, 1),
                 ),
               ),
             ),

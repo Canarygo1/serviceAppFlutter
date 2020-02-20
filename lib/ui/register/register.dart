@@ -74,7 +74,7 @@ class _RegisterScreen extends State<RegisterScreen> implements RegisterView {
                           shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(25.0)),
                           child: Text(
-                            "Login",
+                            "Register",
                             style: TextStyle(color: Colors.white),
                           ),
                           color: Color.fromRGBO(9, 174, 224, 1),

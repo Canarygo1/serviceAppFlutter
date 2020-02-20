@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serviceapp/login_ui/login_presenter.dart';
 import 'package:serviceapp/login_ui/login_screen.dart';
 import 'package:serviceapp/ui/register/register.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RegisterScreen(),
+      home: loginScreen(),
     );
   }
 }
