@@ -50,7 +50,6 @@ class HttpRemoteRepository implements RemoteRepositoryInterface {
 
       List workList = jsonBody;
 
-
       for (int i = 0; i < workList.length; i++) {
         addToList(listOfBeauty, workList, i, 'Belleza');
         addToList(listOfCarWash, workList, i, 'Limpieza Vehiculo');
@@ -62,12 +61,12 @@ class HttpRemoteRepository implements RemoteRepositoryInterface {
         String moreInfo = workList[i]['masinformacion'];
         int reward = workList[i]['preciotrabajo'];
 
-
         Work addWork = new Work(name, type, date, moreInfo, reward);
         listOfWorks.add(addWork);
 
         print('TAMAÑO DE BELLEZA: ' + listOfBeauty.length.toString());
-        print('TAMAÑO DE TAREA DOMESTICAS: ' + listOfChoresAtHome.length.toString());
+        print('TAMAÑO DE TAREA DOMESTICAS: ' +
+            listOfChoresAtHome.length.toString());
         print('TAMAÑO DE LAVADO DE COCHES: ' + listOfCarWash.length.toString());
         print('TAMAÑO TOTAL: ' + listOfWorks.length.toString());
       }

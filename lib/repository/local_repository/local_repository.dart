@@ -1,6 +1,8 @@
-import 'package:serviceapp/repository/model/user.dart';
+import 'dart:convert';
 
-import 'local_repository_interface.dart';
+import 'package:serviceapp/repository/model/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class PreferencesLocalRepository implements LocalRepositoryInterface {
   @override
