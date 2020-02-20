@@ -1,19 +1,35 @@
+import 'package:serviceapp/repository/model/work.dart';
 import 'package:serviceapp/repository/remote%20repository/http_remote_repository.dart';
 
 import 'list_activity.dart';
 
-class ActivitiesPresenter {
+class ListPresenter {
   final HttpRemoteRepository _remoteRepository;
-  final ListScreen _view;
+  final ListExtension _view;
+  List listOfWorks = [];
+  List beautyList = [];
+  List homeChoresList = [];
+  List carWashList = [];
 
-  ActivitiesPresenter(this._view, this._remoteRepository);
 
-  showActivitiesBy() async {
+  ListPresenter(this._view, this._remoteRepository);
 
+   init() async {
+   listOfWorks = await _remoteRepository.showList();
+
+   print('Estoy esperando');
+   beautyList = _remoteRepository.listOfBeauty;
+   carWashList = _remoteRepository.listOfCarWash;
+   homeChoresList = _remoteRepository.listOfChoresAtHome;
+
+
+   _view.showList(listOfWorks, beautyList,carWashList ,homeChoresList);
+   print(listOfWorks.length);
   }
 }
 
-abstract class RegisterView {
-  openMainScreen();
+abstract class ListExtension {
+  showList(List<Work> listAll, List<Work> beautyList, List<Work> carWashList, List<Work> homeChoresList,);
+
   showLoginError();
 }

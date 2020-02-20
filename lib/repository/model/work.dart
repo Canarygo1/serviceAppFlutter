@@ -1,23 +1,26 @@
 class Work{
   final String type;
+  final String name;
   final String date;
   final String moreInfo;
-  final double reward;
+  final int reward;
 
-  Work(this.type, this.date, this.moreInfo, this.reward);
+  Work(this.type,this.name, this.date, this.moreInfo, this.reward);
 
   factory Work.fromMap(Map<String, dynamic> json) {
-    String name =  json['type'];
+    String type =  json['type'];
+    String name =  json['name'];
     String date = json['date'];
     String moreInfo = json['moreInfo'];
-    double reward = json['reward'];
+    int reward = json['reward'];
 
-    return Work(name, date, moreInfo, reward);
+    return Work(type, name, date, moreInfo, reward);
   }
 
   Map toMap() {
     var map = new Map<String, dynamic>();
     map["type"] = type;
+    map["name"] = name;
     map["date"] = date;
     map["moreInfo"] = moreInfo;
     map["reward"] = reward;

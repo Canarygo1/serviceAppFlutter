@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:serviceapp/repository/model/user.dart';
 import 'package:serviceapp/repository/remote%20repository/http_remote_repository.dart';
 
@@ -11,8 +9,6 @@ import 'package:serviceapp/repository/remote%20repository/http_remote_repository
 
   onRegisterClicked(NewUser newUser) async {
     try {
-
-
       bool isCreated = await _remoteRepository.registerUser(newUser);
       print(isCreated);
       if (isCreated == true) {
