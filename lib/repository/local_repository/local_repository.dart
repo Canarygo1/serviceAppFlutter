@@ -1,36 +1,34 @@
-import 'dart:convert';
-
-import 'package:serviceapp/repository/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'local_repository_interface.dart';
 
 class PreferencesLocalRepository implements LocalRepositoryInterface {
+
   @override
-  Future<LoggingUser> getUser() async {
+  Future<String> getToken() async {
     SharedPreferences _sharedPrefs = await SharedPreferences.getInstance();
-    print('Hola sharedPrefs ' + _sharedPrefs.getString('userRegistered'));
-    if (_sharedPrefs.containsKey('userRegistered')) {
-      String userName = _sharedPrefs.getString('userRegistered');
-      return User.fromMap(json.decode(userName));
+
+    print("entro");
+    if (_sharedPrefs.containsKey('tokenRegistered')) {
+      print("entro");
+      String token = _sharedPrefs.getString('tokenRegistered');
+      return token;
     } else
       return null;
   }
 
   @override
-  Future<bool> removeUser() async {
+  Future<bool> removeToken() async {
     SharedPreferences _sharedPrefs = await SharedPreferences.getInstance();
-    return await _sharedPrefs.remove('name');
+    return await _sharedPrefs.remove('tokenRegistered');
   }
 
   @override
-  Future<User> saveUser(User user) async {
-    removeUser();
+  Future<String> saveToken(String token) async {
+    removeToken();
     SharedPreferences _sharedPrefs = await SharedPreferences.getInstance();
-    String userName = json.encode(user.toMap());
 
-    if (await _sharedPrefs.setString('userRegistered', userName)) {
-
-      return user;
+    if (await _sharedPrefs.setString('tokenRegistered', token)) {
+      return token;
     } else
       return null;
   }
