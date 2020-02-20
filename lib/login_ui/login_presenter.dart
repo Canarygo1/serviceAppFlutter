@@ -15,7 +15,7 @@ class LoginPresenter {
     try {
       JsonPostLogin jsonPostLogin = JsonPostLogin(username, password);
       await remoteRepository.postLogin(jsonPostLogin);
-      _view.loginCorrect(false);
+      _view.loginCorrect(true);
     } on Exception catch (e) {
       _view.loginError();
     }

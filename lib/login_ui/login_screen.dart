@@ -55,8 +55,10 @@ class _loginScreenState extends State<loginScreen> implements LoginView {
                 height: 40,
                 child: RaisedButton(
                   onPressed: () => {
-                  Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => RegisterScreen())),
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterScreen())),
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(25.0)),
@@ -103,8 +105,12 @@ class _loginScreenState extends State<loginScreen> implements LoginView {
   }
 
   @override
-  loginCorrect(bool repuesta) {
-    return null;
+  loginCorrect(bool response) {
+    if (response) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => RegisterScreen()));
+    } else
+      return null;
   }
 
   @override
