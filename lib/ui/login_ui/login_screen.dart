@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:serviceapp/login_ui/login_presenter.dart';
 import 'package:serviceapp/ui/list_activity/list_activity.dart';
 import 'package:serviceapp/ui/register/register.dart';
+import '../../Injector.dart';
+import 'login_presenter.dart';
 
-import '../Injector.dart';
-
-class loginScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _loginScreenState createState() => _loginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _loginScreenState extends State<loginScreen> implements LoginView {
+class _LoginScreenState extends State<LoginScreen> implements LoginView {
   @override
   final loginController = TextEditingController();
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:serviceapp/repository/model/work.dart';
+import 'package:serviceapp/data/model/work.dart';
+
 
 class DetailScreen extends StatefulWidget {
   final Work work;

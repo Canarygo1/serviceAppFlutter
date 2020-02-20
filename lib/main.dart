@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serviceapp/login_ui/login_presenter.dart';
-import 'package:serviceapp/login_ui/login_screen.dart';
+import 'package:serviceapp/ui/login_ui/login_screen.dart';
 import 'package:serviceapp/ui/register/register.dart';
 
 void main() => runApp(MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: loginScreen(),
+      home: LoginScreen(),
 
     );
   }

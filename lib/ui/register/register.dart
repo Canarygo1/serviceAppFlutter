@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:serviceapp/repository/Injector.dart';
-import 'package:serviceapp/repository/model/user.dart';
+import 'package:serviceapp/data/model/user.dart';
 import 'package:serviceapp/ui/list_activity/list_activity.dart';
 import 'package:serviceapp/ui/register/presenter_register.dart';
+
+import '../../Injector.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

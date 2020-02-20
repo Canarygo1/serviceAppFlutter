@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:serviceapp/repository/Injector.dart';
-import 'package:serviceapp/repository/model/work.dart';
+import 'package:serviceapp/data/model/work.dart';
 import 'package:serviceapp/ui/list_activity/presenter_list_activity.dart';
-
+import '../../Injector.dart';
 import '../DetailScreen.dart';
 
 class ListScreen extends StatefulWidget {

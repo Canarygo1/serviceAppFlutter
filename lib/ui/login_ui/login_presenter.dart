@@ -1,9 +1,5 @@
-import 'package:serviceapp/data/repository/local_repository/local_repository.dart';
+import 'package:serviceapp/data/model/jsonPostLogin.dart';
 import 'package:serviceapp/data/repository/remote/remote_repository.dart';
-import 'package:serviceapp/model/jsonPostLogin.dart';
-
-import 'package:serviceapp/data/repository/remote/remote_repository.dart';
-import 'package:serviceapp/model/jsonPostLogin.dart';
 
 class LoginPresenter {
   LoginView _view;

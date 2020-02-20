@@ -1,7 +1,5 @@
-import 'package:serviceapp/repository/model/work.dart';
-import 'package:serviceapp/repository/remote%20repository/http_remote_repository.dart';
-
-import 'list_activity.dart';
+import 'package:serviceapp/data/model/work.dart';
+import 'package:serviceapp/data/repository/remote/http_remote_repository.dart';
 
 class ListPresenter {
   final HttpRemoteRepository _remoteRepository;

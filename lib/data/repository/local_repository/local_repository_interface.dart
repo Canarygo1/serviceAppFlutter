@@ -1,5 +1,5 @@
 import 'package:http/http.dart';
-import 'package:serviceapp/model/Response.dart';
+
 
 abstract class LocalRepositoryInterface{
   Future<String> saveToken(String token);

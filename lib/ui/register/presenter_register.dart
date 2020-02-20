@@ -1,5 +1,6 @@
-import 'package:serviceapp/repository/model/user.dart';
-import 'package:serviceapp/repository/remote%20repository/http_remote_repository.dart';
+import 'package:serviceapp/data/model/user.dart';
+import 'package:serviceapp/data/repository/remote/http_remote_repository.dart';
+
 
  class RegisterPresenter {
   final HttpRemoteRepository _remoteRepository;
