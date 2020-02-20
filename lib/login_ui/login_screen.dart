@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serviceapp/login_ui/login_presenter.dart';
+import 'package:serviceapp/ui/list_activity/list_activity.dart';
 import 'package:serviceapp/ui/register/register.dart';
 
 import '../Injector.dart';
@@ -108,7 +109,7 @@ class _loginScreenState extends State<loginScreen> implements LoginView {
   loginCorrect(bool response) {
     if (response) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => RegisterScreen()));
+          context, MaterialPageRoute(builder: (context) => ListScreen()));
     } else
       return null;
   }
