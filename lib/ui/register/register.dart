@@ -49,7 +49,7 @@ class _RegisterScreen extends State<RegisterScreen> implements RegisterView {
                     textFieldForm('Apellido', Icon(Icons.perm_identity),
                         controllerUsername),
                     textFieldForm('Correo', Icon(Icons.email), controllerEmail),
-                    textFieldForm('Direccion', Icon(Icons.person_pin_circle),
+                    textFieldForm('Fecha Nacimiento (yy-mm-dd)', Icon(Icons.calendar_today),
                         controllerBirthDate),
                     textFieldForm('Movil', Icon(Icons.call), controllerMobile),
                     textFieldForm(
@@ -128,12 +128,6 @@ class _RegisterScreen extends State<RegisterScreen> implements RegisterView {
   openMainScreen() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => ListScreen()));
-    return null;
-  }
-
-  @override
-  showLoginError() {
-    // TODO: implement showLoginError
     return null;
   }
 }

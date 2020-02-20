@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:serviceapp/data/repository/local_repository/local_repository.dart';
 import 'package:serviceapp/login_ui/login_presenter.dart';
-
+import 'package:serviceapp/ui/list_activity/list_activity.dart';
 import '../Injector.dart';
 
-class loginScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _loginScreenState createState() => _loginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _loginScreenState extends State<loginScreen> implements LoginView {
+class _LoginScreenState extends State<LoginScreen> implements LoginView {
   @override
   final loginController = TextEditingController();
-
   final passwordController = TextEditingController();
 
-  LoginPresenter presenter;
+  LoginPresenter _presenter;
+  PreferencesLocalRepository _localRepository =
+      new PreferencesLocalRepository();
 
   @override
   void initState() {
     super.initState();
-    presenter = LoginPresenter(this, Injector.instance.remoteRepository);
+    _presenter = LoginPresenter(this, Injector.instance.remoteRepository);
+    Future<dynamic> token = _presenter.checkLocal();
+    if (token != null) {
+      print('No soy null, mi token es ' + token.toString());
+    }
   }
 
   Widget build(BuildContext context) {
@@ -71,7 +77,7 @@ class _loginScreenState extends State<loginScreen> implements LoginView {
                 height: 40,
                 child: RaisedButton(
                   onPressed: () => {
-                    presenter.onLoginClicked(
+                    _presenter.onLoginClicked(
                         loginController.text, passwordController.text)
                   },
                   shape: RoundedRectangleBorder(
@@ -91,7 +97,11 @@ class _loginScreenState extends State<loginScreen> implements LoginView {
   }
 
   @override
-  loginCorrect(bool repuesta) {
+  loginCorrect(bool response) {
+    if(response){
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ListScreen()));
+    }
     return null;
   }
 

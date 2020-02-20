@@ -37,12 +37,6 @@ class _ListScreen extends State<ListScreen> implements ListExtension {
   }
 
   @override
-  showLoginError() {
-    // TODO: implement showLoginError
-    return null;
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(44, 45, 47, 1),

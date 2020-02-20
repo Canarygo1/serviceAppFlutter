@@ -30,6 +30,4 @@ class ListPresenter {
 
 abstract class ListExtension {
   showList(List<Work> listAll, List<Work> beautyList, List<Work> carWashList, List<Work> homeChoresList,);
-
-  showLoginError();
 }

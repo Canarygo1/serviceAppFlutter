@@ -14,7 +14,7 @@ import 'package:serviceapp/repository/remote%20repository/http_remote_repository
       if (isCreated == true) {
         _view.openMainScreen();
       }else{
-        _view.showLoginError();
+        return null;
       }
     } catch (e) {
       print(e);
@@ -24,5 +24,4 @@ import 'package:serviceapp/repository/remote%20repository/http_remote_repository
 
 abstract class RegisterView {
   openMainScreen();
-  showLoginError();
 }

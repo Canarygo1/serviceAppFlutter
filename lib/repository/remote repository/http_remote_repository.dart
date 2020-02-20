@@ -16,16 +16,6 @@ class HttpRemoteRepository implements RemoteRepositoryInterface {
   HttpRemoteRepository(this._client);
 
   @override
-  Future<String> logInUser(String email, String password) async {
-    LoggingUser(email, password);
-
-    if (email == 'root' && password == '1234') {
-      return logInUser(email, password);
-    } else
-      return null;
-  }
-
-  @override
   Future<bool> registerUser(NewUser newUser) async {
     print("entro en funcion");
     var json = newUser.toMap();
