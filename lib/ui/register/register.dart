@@ -35,6 +35,7 @@ class _RegisterScreen extends State<RegisterScreen> implements RegisterView {
 
   Widget register() {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(44, 45, 47, 1),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
