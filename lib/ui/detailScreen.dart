@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:serviceapp/repository/model/work.dart';
 
 class DetailScreen extends StatefulWidget {
+  final Work work;
+
+  DetailScreen(this.work);
+
   @override
   _DetailScreenState createState() => _DetailScreenState();
 }
@@ -25,28 +30,47 @@ class _DetailScreenState extends State<DetailScreen> {
                 )),
             Row(
               children: <Widget>[
-                Text("Nombre: ", style: TextStyle(color: Colors.white))
+                Expanded(
+                  child: Image(
+                      fit: BoxFit.fill,
+                      height: 200,
+                      width: 100,
+                      image: ExactAssetImage("assets/${widget.work.name}.jpg")),
+                ),
               ],
             ),
             Row(
               children: <Widget>[
-                Text("Tipo de servicio", style: TextStyle(color: Colors.white)),
+                Text("Tipo: ",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                Text(widget.work.name, style: TextStyle(color: Colors.white))
               ],
             ),
             Row(
               children: <Widget>[
-                Icon(Icons.star),
-                Text("Valoracion: ", style: TextStyle(color: Colors.white)),
+                Text("Nombre: ",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                Text(widget.work.type, style: TextStyle(color: Colors.white))
               ],
             ),
             Row(
               children: <Widget>[
-                Text("Descripcion: ", style: TextStyle(color: Colors.white)),
+                Text("Descripcion: ",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                Text(widget.work.moreInfo,
+                    style: TextStyle(color: Colors.white))
               ],
             ),
             Row(
               children: <Widget>[
-                Text("Fecha: ", style: TextStyle(color: Colors.white)),
+                Text("Fecha: ",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                Text(widget.work.date.substring(0, 10),
+                    style: TextStyle(color: Colors.white))
               ],
             ),
             Row(
@@ -61,7 +85,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         fontSize: 18.0,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () => {},
                     shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(10.0),
                     ),

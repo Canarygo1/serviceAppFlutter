@@ -109,8 +109,10 @@ class _ListScreen extends State<ListScreen> implements ListExtension {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () => {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DetailScreen()))
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailScreen(list[index])))
               },
               child: Container(
                 width: 120,
