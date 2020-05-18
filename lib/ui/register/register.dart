@@ -4,7 +4,7 @@ import 'package:serviceapp/data/model/user.dart';
 import 'package:serviceapp/ui/list_activity/list_activity.dart';
 import 'package:serviceapp/ui/register/presenter_register.dart';
 
-import '../../Injector.dart';
+import '../../data/Injector.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

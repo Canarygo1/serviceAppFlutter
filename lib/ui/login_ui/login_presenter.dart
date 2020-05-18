@@ -10,8 +10,12 @@ class LoginPresenter {
   onLoginClicked(String username, String password) async {
     try {
       JsonPostLogin jsonPostLogin = JsonPostLogin(username, password);
-      await remoteRepository.postLogin(jsonPostLogin);
-      _view.loginCorrect(true);
+      String passResponse = await remoteRepository.postLogin(jsonPostLogin);
+      print(passResponse);
+      if (passResponse != 'error') {
+        print(password);
+        _view.loginCorrect(true);
+      }
     } on Exception catch (e) {
       _view.loginError();
     }

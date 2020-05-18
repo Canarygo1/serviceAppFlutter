@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:serviceapp/ui/list_activity/list_activity.dart';
+import 'package:serviceapp/ui/map/map_screen.dart';
 import 'package:serviceapp/ui/register/register.dart';
-import '../../Injector.dart';
+import '../../data/Injector.dart';
 import 'login_presenter.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,9 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> implements LoginView {
-  @override
   final loginController = TextEditingController();
-
   final passwordController = TextEditingController();
 
   LoginPresenter presenter;
@@ -108,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> implements LoginView {
   loginCorrect(bool response) {
     if (response) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ListScreen()));
+          context, MaterialPageRoute(builder: (context) => MapScreen()));
     } else
       return null;
   }
