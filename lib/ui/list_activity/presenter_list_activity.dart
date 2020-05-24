@@ -2,7 +2,7 @@ import 'package:serviceapp/data/model/work.dart';
 import 'package:serviceapp/data/repository/remote/http_remote_repository.dart';
 
 class ListPresenter {
-  final HttpRemoteRepository _remoteRepository;
+  //final HttpRemoteRepository _remoteRepository;
   final ListExtension _view;
   List listOfWorks = [];
   List beautyList = [];
@@ -10,10 +10,10 @@ class ListPresenter {
   List carWashList = [];
 
 
-  ListPresenter(this._view, this._remoteRepository);
+  ListPresenter(this._view/*, this._remoteRepository*/);
 
    init() async {
-   listOfWorks = await _remoteRepository.showList();
+   /*listOfWorks = await _remoteRepository.showList();
 
    print('Estoy esperando');
    beautyList = _remoteRepository.listOfBeauty;
@@ -22,7 +22,7 @@ class ListPresenter {
 
 
    _view.showList(listOfWorks, beautyList,carWashList ,homeChoresList);
-   print(listOfWorks.length);
+   print(listOfWorks.length);*/
   }
 }
 

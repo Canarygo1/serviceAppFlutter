@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "765742312824",
+    "firebase_url": "https://timeapp-de1bc.firebaseio.com",
+    "project_id": "timeapp-de1bc",
+    "storage_bucket": "timeapp-de1bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765742312824:android:e58659bf422b43273c2c8d",
+        "android_client_info": {
+          "package_name": "alejandr.com.example.serviceapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765742312824-g67uqnv304uu4mh5pj3c5qpqaarh8kfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBh5LTMAy-TgwEa2J2RQxGO0on25Arqi10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765742312824-g67uqnv304uu4mh5pj3c5qpqaarh8kfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

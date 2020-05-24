@@ -21,7 +21,7 @@ class _ListScreen extends State<ListScreen> implements ListExtension {
   @override
   void initState() {
     super.initState();
-    _presenter = ListPresenter(this, Injector.instance.remoteRepository);
+    _presenter = ListPresenter(this/*, Injector.instance.remoteRepository*/);
     _presenter.init();
   }
 

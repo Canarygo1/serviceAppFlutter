@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
+    Firestore.instance.collection('books').document()
+        .setData({ 'title': 'title', 'author': 'author' });
     getCurrentLocation();
     super.initState();
   }

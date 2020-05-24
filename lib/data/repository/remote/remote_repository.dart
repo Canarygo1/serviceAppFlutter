@@ -1,5 +1,5 @@
 import 'package:serviceapp/data/model/jsonPostLogin.dart';
-import 'package:serviceapp/data/model/user.dart';
+import 'package:serviceapp/data/model/olduser.dart';
 import 'package:serviceapp/data/model/work.dart';
 
 

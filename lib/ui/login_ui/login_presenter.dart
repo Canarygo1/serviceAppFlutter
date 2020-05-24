@@ -1,29 +1,39 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:serviceapp/data/model/jsonPostLogin.dart';
-import 'package:serviceapp/data/repository/remote/remote_repository.dart';
+import 'package:serviceapp/data/model/user.dart';
+import 'package:serviceapp/global_methods.dart';
+import 'package:serviceapp/newdata/local/db_sqlite.dart';
+import 'package:serviceapp/newdata/remote/http_remote_repository.dart';
+import 'package:serviceapp/newdata/remote/remote_repository.dart';
 
-class LoginPresenter {
-  LoginView _view;
-  RemoteRepository remoteRepository;
+class LoginCode {
+  LoginView loginView;
+  LoginCode(this.loginView);
 
-  LoginPresenter(this._view, this.remoteRepository);
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  User userLogin;
+  Widget screen;
+  //RemoteRepository _remoteRepository = HttpRemoteRepository(Firestore.instance);
 
-  onLoginClicked(String username, String password) async {
+  void iniciarSesion(
+      String email, String password, BuildContext context) async {
+    FirebaseUser user;
     try {
-      JsonPostLogin jsonPostLogin = JsonPostLogin(username, password);
-      String passResponse = await remoteRepository.postLogin(jsonPostLogin);
-      print(passResponse);
-      if (passResponse != 'error') {
-        print(password);
-        _view.loginCorrect(true);
-      }
-    } on Exception catch (e) {
-      _view.loginError();
+      user = (await auth.signInWithEmailAndPassword(
+          email: email, password: password))
+          .user;
+      //userLogin = await _remoteRepository.getUser(user.uid);
+      /*DBProvider.db.insert(userLogin);
+      GlobalMethods().searchDBUser(context);
+      loginView.changeTextError("");*/
+    } catch (Exception) {
+      loginView.changeTextError("Los datos no son correctos");
     }
   }
 }
 
 abstract class LoginView {
-  loginCorrect(bool repuesta) {}
-
-  loginError() {}
+  changeTextError(String text);
 }

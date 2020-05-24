@@ -1,168 +1,170 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:serviceapp/ui/list_activity/list_activity.dart';
-import 'package:serviceapp/ui/map/map_screen.dart';
+import 'package:flutter/widgets.dart';
+import 'package:serviceapp/global_methods.dart';
+import 'package:serviceapp/ui/components/button.dart';
+import 'package:serviceapp/ui/components/textTypes/large_text.dart';
+import 'package:serviceapp/ui/components/textTypes/my_textField.dart';
+import 'package:serviceapp/ui/components/textTypes/text_error.dart';
 import 'package:serviceapp/ui/register/register.dart';
-import '../../data/Injector.dart';
+import 'package:serviceapp/ui/reset_password/reset_password_screen.dart';
 import 'login_presenter.dart';
 
-class LoginScreen extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginState createState() => _LoginState();
 }
 
-class _LoginScreenState extends State<LoginScreen> implements LoginView {
-  final loginController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  LoginPresenter presenter;
+class _LoginState extends State<Login> implements LoginView {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  String error = "";
+  LoginCode loginCode;
+  double HEIGHT;
+  double WIDHT;
+  List list;
+  Random rnd;
+  List<String> backgroundImages = ["assets/images/Login.jpg", "assets/images/Login2.jpg", "assets/images/Login3.jpg"];
+  int randomBackground ;
 
   @override
   void initState() {
     super.initState();
-    presenter = LoginPresenter(this, Injector.instance.remoteRepository);
+    rnd = new Random();
+    randomBackground = 0 + rnd.nextInt(3 - 0);
+    //loginCode = LoginCode(this);
   }
 
+  @override
   Widget build(BuildContext context) {
+    HEIGHT = MediaQuery.of(context).size.height;
+    WIDHT = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(44, 45, 47, 1),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(70.0, 120.0, 70.0, 0.0),
-        child: ListView(
-          physics: const NeverScrollableScrollPhysics(),
-          children: <Widget>[
-            textFieldForm(
-                "Email",
-                Icon(
-                  Icons.email,
-                  color: Colors.black,
-                ),
-                loginController),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: textFieldForm(
-                  "Password",
-                  Icon(
-                    Icons.lock,
-                    color: Colors.black,
-                  ),
-                  passwordController),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
-              child: ButtonTheme(
-                minWidth: 2,
-                height: 40,
-                child: RaisedButton(
-                  onPressed: () => {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterScreen())),
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(25.0)),
-                  child: Text(
-                    "Registrate",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Color.fromRGBO(30, 30, 30, 1),
-                ),
+        resizeToAvoidBottomInset: false,
+
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: ExactAssetImage(backgroundImages[randomBackground]),
+                fit: BoxFit.cover
               ),
             ),
-            Center(
-              child: Divider(
-                thickness: 2.0,
-                indent: 64,
-                endIndent: 65,
-                color: Color.fromRGBO(9, 174, 224, 1),
-              ),
+            child: ListView(
+              children: <Widget>[
+                /*Padding(
+                  padding: EdgeInsets.fromLTRB(WIDHT * 0.200,HEIGHT * 0.126,
+                      WIDHT * 0.200, 0),
+                  child: Container(
+                     child: Image.asset("assets/images/logo.png", fit: BoxFit.cover)),
+                ),*/
+                textFieldWidget(emailController, TextInputType.emailAddress,
+                    "Correo electrónico",
+                    topPadding: HEIGHT * 0.176),
+                textFieldWidget(
+                    passwordController, TextInputType.text, "Contraseña",
+                    obscureText: true, topPadding: 0.0),
+                error.length == 0 ? Container() : TextError(error),
+                TextForgetPassword(context),
+                MyButton(() => logIn(), LargeText("Entrar"),
+                    color: Color.fromRGBO(230, 73, 90, 1)),
+                TextRegister(context),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
-              child: ButtonTheme(
-                minWidth: 2,
-                height: 40,
-                child: RaisedButton(
-                  onPressed: () => {
-                    presenter.onLoginClicked(
-                        loginController.text, passwordController.text)
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(25.0)),
-                  child: Text(
-                    "Login",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Color.fromRGBO(9, 174, 224, 1),
-                ),
-              ),
-            )
-          ],
+          ),
+        ));
+  }
+
+  Widget textFieldWidget(controller, textType, hintText,
+      {obscureText = false, topPadding = 0.0}) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+          WIDHT * 0.101, topPadding, WIDHT * 0.089, HEIGHT * 0.027),
+      child: MyTextField(
+        controller,
+        textType,
+        InputDecoration(
+          hintText: hintText,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white, width: WIDHT * 0.003),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white, width: WIDHT * 0.003),
+          ),
+          hintStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+          ),
         ),
+        TextStyle(
+          color: Colors.white,
+          fontSize: 18.0,
+        ),
+        obscureText: obscureText,
       ),
     );
   }
 
-  @override
-  loginCorrect(bool response) {
-    if (response) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MapScreen()));
-    } else
-      return null;
+  Widget logo(BuildContext context) {}
+
+  Widget TextRegister(BuildContext context) {
+    return Align(
+        alignment: Alignment.centerRight,
+        child: Padding(
+            padding: EdgeInsets.only(
+                bottom: 20.0, right: MediaQuery.of(context).size.width * 0.10),
+            child: GestureDetector(
+              onTap: () {
+                GlobalMethods().pushPage(context, register());
+              },
+              child: Text(
+                'Registrarse',
+                style: TextStyle(
+                  color: Color.fromRGBO(0, 144, 255, 1),
+                  decoration: TextDecoration.underline,
+                  decorationColor: Color.fromRGBO(0, 144, 255, 1),
+                  fontSize: 16.0,
+                ),
+              ),
+            )));
+  }
+
+  Widget TextForgetPassword(BuildContext context) {
+    return Align(
+        alignment: Alignment.centerRight,
+        child: Padding(
+            padding:
+            EdgeInsets.only(bottom: HEIGHT * 0.027, right: WIDHT * 0.10),
+            child: GestureDetector(
+              onTap: () {
+                GlobalMethods().pushPage(context, ResetPassword());
+              },
+              child: Text(
+                '¿Has olvidado tu contraseña?',
+                style: TextStyle(
+                  color: Color.fromRGBO(0, 144, 255, 1),
+                  decoration: TextDecoration.underline,
+                  decorationColor: Color.fromRGBO(0, 144, 255, 1),
+                  fontSize: 16.0,
+                ),
+              ),
+            )));
+  }
+
+  logIn() {
+    /*loginCode.iniciarSesion(emailController.text.toString(),
+        passwordController.text.toString(), context);*/
   }
 
   @override
-  loginError() {
-    return null;
+  changeTextError(String text) {
+    if (mounted) {
+      setState(() {
+        error = text;
+      });
+    }
   }
-}
-
-Widget textFieldForm(
-    String fieldName, Icon icon, TextEditingController myController) {
-  var regFields;
-  regFields = Container(
-    height: 45,
-    width: 250,
-    decoration: new BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(25.0)),
-    child: TextFormField(
-      keyboardType: TextInputType.visiblePassword,
-      controller: myController,
-      decoration: new InputDecoration(
-        contentPadding: const EdgeInsets.all(2),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
-            borderSide: BorderSide(
-              color: Color.fromRGBO(9, 174, 224, 1),
-              width: 1.0,
-            )),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide: BorderSide(
-            width: 2,
-            color: Color.fromRGBO(9, 174, 224, 1),
-          ),
-        ),
-        alignLabelWithHint: true,
-        prefixIcon: icon,
-        labelText: fieldName,
-        labelStyle: TextStyle(
-          color: Colors.black,
-          decoration: TextDecoration.none,
-        ),
-        border: new OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(25.0),
-          borderSide: new BorderSide(),
-        ),
-      ),
-      style: new TextStyle(
-        decoration: TextDecoration.none,
-        color: Colors.black,
-        fontFamily: "Poppins",
-      ),
-    ),
-  );
-
-  return regFields;
 }

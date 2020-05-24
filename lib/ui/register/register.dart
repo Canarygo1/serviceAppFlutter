@@ -1,151 +1,191 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:serviceapp/data/model/user.dart';
-import 'package:serviceapp/ui/list_activity/list_activity.dart';
+import 'package:serviceapp/global_methods.dart';
+import 'package:serviceapp/ui/components/button.dart';
+import 'package:serviceapp/ui/components/textTypes/large_text.dart';
+import 'package:serviceapp/ui/components/textTypes/my_textField.dart';
+import 'package:serviceapp/ui/components/upElements/goback.dart';
 import 'package:serviceapp/ui/register/presenter_register.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import '../../data/Injector.dart';
+import '../sms.dart';
 
-class RegisterScreen extends StatefulWidget {
+class register extends StatefulWidget {
   @override
-  _RegisterScreen createState() => _RegisterScreen();
+  _registerState createState() => _registerState();
 }
 
-class _RegisterScreen extends State<RegisterScreen> implements RegisterView {
-  RegisterPresenter _presenter;
-  final controllerName = TextEditingController();
-  final controllerUsername = TextEditingController();
-  final controllerEmail = TextEditingController();
-  final controllerBirthDate = TextEditingController();
-  final controllerMobile = TextEditingController();
-  final controllerPassword = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _presenter = RegisterPresenter(this, Injector.instance.remoteRepository);
-  }
+class _registerState extends State<register> {
+  TextEditingController name = TextEditingController();
+  TextEditingController surname = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController password2 = TextEditingController();
+  GlobalKey<FormState> keyForm = GlobalKey();
+  double HEIGHT;
+  double WIDHT;
+  String error = "";
+  RegisterPresenter registerCode = RegisterPresenter();
 
   @override
   Widget build(BuildContext context) {
+    HEIGHT = MediaQuery.of(context).size.height;
+    WIDHT = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(0, 0, 0, 1),
-      body: register(),
-    );
-  }
-
-  Widget register() {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(44, 45, 47, 1),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 50),
-                child: Column(
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: Form(
+            key: keyForm,
+            child: Container(
+                color: Color.fromRGBO(300, 300, 300, 1),
+                child: ListView(
                   children: <Widget>[
-                    textFieldForm(
-                        'Nombre', Icon(Icons.account_circle), controllerName),
-                    textFieldForm('Apellido', Icon(Icons.perm_identity),
-                        controllerUsername),
-                    textFieldForm('Correo', Icon(Icons.email), controllerEmail),
-                    textFieldForm('Fecha Nacimiento (yy-mm-dd)',
-                        Icon(Icons.calendar_today), controllerBirthDate),
-                    textFieldForm('Movil', Icon(Icons.call), controllerMobile),
-                    textFieldForm(
-                        'Password', Icon(Icons.lock), controllerPassword),
+                    GoBack(context, "Volver"),
+                    textFieldWidget(name, TextInputType.text, "Nombre", topPadding: HEIGHT * 0.067),
+                    textFieldWidget(surname, TextInputType.text, "Apellidos"),
+                    textFieldWidget(email, TextInputType.emailAddress, "Correo electrónico"),
+                    textFieldWidget(password, TextInputType.text, "Contraseña", obscureText: true),
+                    textFieldWidget(password2, TextInputType.text, "Repetir contraseña", obscureText: true),
+                    error.length == 0 ? Container() : textError(),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
-                      child: ButtonTheme(
-                        minWidth: 2,
-                        height: 40,
-                        child: RaisedButton(
-                          onPressed: () {
-                            NewUser user = NewUser(
-                                controllerName.text,
-                                controllerUsername.text,
-                                controllerEmail.text,
-                                controllerBirthDate.text,
-                                controllerMobile.text,
-                                controllerPassword.text);
-                            _presenter.onRegisterClicked(user);
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(25.0)),
-                          child: Text(
-                            "Register",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          color: Color.fromRGBO(9, 174, 224, 1),
+                      padding: EdgeInsets.only(left: WIDHT * 0.11),
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text:
+                                "Al continuar, aceptas nuestras Condiones de uso y confirmas que has leído nuestra",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.white,
+                                    fontSize: 12)),
+                            TextSpan(
+                                recognizer: new TapGestureRecognizer()
+                                  ..onTap = () {
+                                    launch('https://pruebafirebase-44f30.web.app/');
+                                  },
+                                text: " Política de Privacidad",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.white,
+                                    fontSize: 12)),
+                          ],
                         ),
                       ),
-                    )
+                    ),
+                    MyButton(() => checkEmail(), LargeText("Continuar"),
+                        color: Color.fromRGBO(230, 73, 90, 1)),
                   ],
-                ),
-              ),
-            ],
+                )),
+          ),
+        ));
+  }
+
+  Widget textFieldWidget(controller, textType, hintText,
+      {obscureText = false, topPadding = 0.0}) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+          WIDHT * 0.101, topPadding, WIDHT * 0.089, HEIGHT * 0.027),
+      child: MyTextField(
+        controller,
+        textType,
+        InputDecoration(
+          hintText: hintText,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white, width: WIDHT * 0.003),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white, width: WIDHT * 0.003),
+          ),
+          hintStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
           ),
         ),
+        TextStyle(
+          color: Colors.white,
+          fontSize: 18.0,
+        ),
+        obscureText: obscureText,
       ),
     );
   }
 
-  Widget textFieldForm(
-      String fieldName, Icon icon, TextEditingController controllerName) {
-    var regFields;
-    regFields = Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      height: 45,
-      width: 250,
-      decoration: new BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(25.0)),
-      child: TextFormField(
-        keyboardType: TextInputType.visiblePassword,
-        controller: controllerName,
-        decoration: new InputDecoration(
-          contentPadding: const EdgeInsets.all(2),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25.0),
-              borderSide: BorderSide(
-                color: Color.fromRGBO(9, 174, 224, 1),
-                width: 1.0,
-              )),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
-            borderSide: BorderSide(
-              width: 2,
-              color: Color.fromRGBO(9, 174, 224, 1),
+  Widget buttonRegister(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(
+          WIDHT * 0.101, 0.0, WIDHT * 0.089, HEIGHT * 0.027),
+      child: ButtonTheme(
+        child: RaisedButton(
+          child: Text(
+            'Entrar',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
             ),
           ),
-          alignLabelWithHint: true,
-          prefixIcon: icon,
-          labelText: fieldName,
-          labelStyle: TextStyle(
-            color: Colors.black,
-            decoration: TextDecoration.none,
-          ),
-          border: new OutlineInputBorder(
-            borderRadius: new BorderRadius.circular(25.0),
-            borderSide: new BorderSide(),
+          onPressed: () {
+            checkEmail();
+          },
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
           ),
         ),
-        style: new TextStyle(
-          decoration: TextDecoration.none,
-          color: Colors.black,
-          fontFamily: "Poppins",
-        ),
+        height: 60.0,
+        buttonColor: Color.fromRGBO(230, 73, 90, 1),
       ),
     );
-
-    return regFields;
   }
 
-  @override
-  openMainScreen() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ListScreen()));
-    return null;
+  Widget textError() {
+    return Container(
+        padding: EdgeInsets.fromLTRB(
+            WIDHT * 0.101, 0.0, WIDHT * 0.089, HEIGHT * 0.027),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: HEIGHT * 0.005),
+            child: Text(
+              error,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Color.fromRGBO(230, 73, 90, 1),
+              ),
+            ),
+          ),
+        ));
+  }
+
+  Map<String, Object> getData() {
+    Map data = Map<String, Object>();
+    data.putIfAbsent("Apellidos", () => surname.text.toString());
+    data.putIfAbsent("Email", () => email.text.toString());
+    data.putIfAbsent("Nombre", () => name.text.toString());
+    data.putIfAbsent("Permisos", () => 3);
+    return data;
+  }
+
+  checkEmail() async {
+    var tokkens = await FirebaseAuth.instance
+        .fetchSignInMethodsForEmail(email: email.text);
+    if (registerCode.checkCampos(keyForm)) {
+      if (tokkens.length == 0) {
+        setState(() {
+          error = "";
+        });
+        GlobalMethods().pushPage(context, SendSMS(getData(), password.text));
+      } else {
+        setState(() {
+          error = "El email introducido ya existe";
+        });
+      }
+    } else {
+      error = "Rellene los campos de forma correcta";
+    }
   }
 }
